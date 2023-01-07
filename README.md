@@ -9,7 +9,7 @@
 <li>Indexed</li></p>
 
 <h2>Paging Techniques</h2>
-<p>To implement different paging techniques of memory management</p>
+<p>To implement different paging techniques of memory management - Allocation of frames to processes and calculation of internal fragmentation</p>
 
 <h2>Two Pass Assembler</h2>
 <p>Pass One</p>
