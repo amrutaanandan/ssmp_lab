@@ -30,12 +30,8 @@ void read_from_optab(){
             LOCCTR += atoi(operand);
     }
     else if (strcmp(opcode, "BYTE") == 0){
-        if (operand[0] == 'C'){
             LOCCTR += strlen(operand) - 3;
-        }
-        else if (operand[0] == 'X'){
-            LOCCTR += strlen(operand) - 2;
-        }
+    
     }
     else if (opcode[0] == '+'){
             LOCCTR += 4;
