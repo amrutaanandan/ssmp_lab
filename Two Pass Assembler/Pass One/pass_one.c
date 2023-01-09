@@ -80,7 +80,6 @@ void main(){
     fclose(program);
     fclose(symtab);
     fclose(imdt);
-    fclose(optab);
     fclose(length);
 
 }
