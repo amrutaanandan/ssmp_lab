@@ -180,8 +180,8 @@ void main() {
   fclose(imdt);
   fclose(length);
 }
------------------------------------------------
-/*Ouput format:                                
+
+/*Output format:                                
 -----------------------------------------------
 Intermediate.txt:
 -	     -  	     COPY	     START	 
