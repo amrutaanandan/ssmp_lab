@@ -180,3 +180,30 @@ void main() {
   fclose(imdt);
   fclose(length);
 }
+-----------------------------------------------
+/*Ouput format:                                
+-----------------------------------------------
+Intermediate.txt:
+-	     -  	     COPY	     START	 
+4000 3	START	LDA	     ALPHA
+4003	3	-	     ADD	     ONE
+4006	3	-	     SUB	     TWO
+4009	4	-	     +STA	     BETA
+400d	3	-	     RSUB	     -
+4010	5	ALPHA	BYTE	     C'HELLO'
+4015	2	ONE	     RESB	     2
+4017	3	TWO	     WORD	     5
+401a	3	BETA	     RESW	     1
+401d	3	-	     END	     START
+-----------------------------------------------
+Symtab.txt:
+
+ALPHA     4010
+ONE	     4015
+TWO	     4017
+BETA	     401a
+-----------------------------------------------
+Length.txt:
+
+29*/
+-----------------------------------------------
