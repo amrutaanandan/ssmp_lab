@@ -1,85 +1,182 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
-FILE *program, *optab, *symtab, *imdt, *length;
+FILE *program, *optab, *symtab, *imdt, *length, *create_symtab;
+int error=0, instr_len = 3, curr;
 
-char label[10], operand[10], opcode[5], code[5], mnemonic[5], LOCCTR_hex[5];
-int LOCCTR, start_address;
+char label[10] = {' '}, operand[10] = {' '}, opcode[10] = {' '},
+     optab_opcode[10] = {' '};
+char optab_mnemonic[10] = {' '}, symtab_opcode[10] = {' '},
+     symtab_operand[10] = {' '};
+int LOCCTR, start_address, symbol_dupl;
 
-void read_from_optab(){
-    optab = fopen("optab.txt", "r");
-    fscanf(optab, "%s %s", code, mnemonic);
+/*--------------------READING FROM OPTAB AND GETTING LOCCTR--------------------*/
 
-    while(strcmp(code, "END") != 0){
-        if (strcmp(opcode, code) == 0){
+void read_from_optab() {
+  optab = fopen("optab.txt", "r");
+  fscanf(optab, "%s %s", optab_opcode, optab_mnemonic);
 
-            LOCCTR += 3;
-            break;
-        }
-        fscanf(optab, "%s %s", code, mnemonic);
+  while (!feof(optab)) {
+    //if found then 
+    if (strcmp(opcode, optab_opcode) == 0) {
+      //add 3 {instruction length} to locctr
+      LOCCTR += 3;
+      break;
     }
-
-    if (strcmp(opcode, "RESW") == 0){
-            LOCCTR += atoi(operand)*3;
+    fscanf(optab, "%s %s", optab_opcode, optab_mnemonic);
+  }
+  
+  //else if opcode = 'RESW' then
+  if (strcmp(opcode, "RESW") == 0) {
+    LOCCTR += atoi(operand) * 3;
+  }
+  //else if opcode = 'WORD' then
+  else if (strcmp(opcode, "WORD") == 0) {
+    LOCCTR += 3;
+  }
+  //else if opcode = 'RESB' then
+  else if (strcmp(opcode, "RESB") == 0) {
+    LOCCTR += atoi(operand);
+  }
+  //else if opcode = 'BYTE' then
+  else if (strcmp(opcode, "BYTE") == 0) {
+    LOCCTR += strlen(operand) - 3;
+      
+  }
+  //else if it is a format 4 instruction
+  else if (opcode[0] == '+') {
+    LOCCTR += 4;
+  }
+    else{
+    //set error flag {invalid operation code}
+     error = 0;
     }
-    else if (strcmp(opcode, "WORD") == 0){
-            LOCCTR += 3;
-    }
-    else if (strcmp(opcode, "RESB") == 0){
-            LOCCTR += atoi(operand);
-    }
-    else if (strcmp(opcode, "BYTE") == 0){
-            LOCCTR += strlen(operand) - 3;
     
-    }
-    else if (opcode[0] == '+'){
-            LOCCTR += 4;
-    }
-    fclose(optab);
+  fclose(optab);
 }
 
-void main(){
-    
-    program = fopen("input.txt", "r");
-    
-    symtab = fopen("symtab.txt", "w");
-    imdt = fopen("intermediate.txt", "w");
-    length = fopen("length.txt", "w");
+/*--------------------SEARCHING IN SYMTAB FOR SYMBOLS--------------------*/
 
+void search_in_symtab() {
+  FILE *symtab;
+  symbol_dupl = 0;
+  int count = 0;
+  symtab = fopen("symtab.txt", "r+");
 
+  while (!feof(symtab)) {
+    fscanf(symtab, "%s\t%s", symtab_opcode, symtab_operand);
+
+    //if symbol found in symtab then 
+    if (strcmp(label, symtab_opcode) == 0) {
+      symbol_dupl = 1;
+    //set error flag {duplicate symbol}
+      error = 1;
+      break;
+    }
+  }
+  //else insert {label, locctr} into symtab
+  if (symbol_dupl == 0) {
+    fprintf(symtab, "%s\t%x\n", label, LOCCTR);
+
+  }
+
+  fclose(symtab);
+}
+
+/*--------------------GETTING INSTRUCTION LENGTH--------------------*/
+
+void get_instr_len() {
+  optab = fopen("optab.txt", "r");
+  fscanf(optab, "%s %s", optab_opcode, optab_mnemonic);
+
+  while (!feof(optab)) {
+    //if found then 
+    if (strcmp(opcode, optab_opcode) == 0) {
+      //add 3 {instruction length} to locctr
+      instr_len = 3;
+      break;
+    }
+    fscanf(optab, "%s %s", optab_opcode, optab_mnemonic);
+  }
+  
+  //else if opcode = 'RESW' then
+  if (strcmp(opcode, "RESW") == 0) {
+    instr_len = atoi(operand) * 3;
+  }
+  //else if opcode = 'WORD' then
+  else if (strcmp(opcode, "WORD") == 0) {
+    instr_len = 3;
+  }
+  //else if opcode = 'RESB' then
+  else if (strcmp(opcode, "RESB") == 0) {
+    instr_len = atoi(operand);
+  }
+  //else if opcode = 'BYTE' then
+  else if (strcmp(opcode, "BYTE") == 0) {
+    instr_len = strlen(operand) - 3;
+      
+  }
+  //else if it is a format 4 instruction
+  else if (opcode[0] == '+') {
+    instr_len = 4;
+  }
+    
+  fclose(optab);
+}
+
+void main() {
+
+  program = fopen("input.txt", "r");
+  imdt = fopen("intermediate.txt", "w");
+  length = fopen("length.txt", "w");
+  create_symtab = fopen("symtab.txt", "w");
+  fclose(create_symtab);
+
+  // read first input line
+
+  fscanf(program, "%s%s%x", label, opcode, &LOCCTR);
+
+  if (strcmp(opcode, "START") == 0) {
+    // save #[operand] as starting start_address
+    // initialize LOCCTR to start address
+    start_address = LOCCTR;
+    fprintf(imdt, "-\t    -  \t%s\t%s\t%s\n", label, opcode, operand);
+
+    // read next input line
     fscanf(program, "%s%s%s", label, opcode, operand);
+  } else {
+    // initialize LOCCTR to zero
+    LOCCTR = 0;
+  }
 
-    if (strcmp(opcode, "START") == 0){
-        LOCCTR = atoi(operand);
-        start_address = LOCCTR;
-        fprintf(imdt, "- %s %s %s\n", label, opcode, operand);
-        fscanf(program, "%s%s%s", label, opcode, operand);
-    }
-    else{
-        LOCCTR = 0;
-    }
+  // while opcode not equal to end
+  while (strcmp(opcode, "END") != 0) {
 
+    // if not a comment line then
+    if (label[0] != ';') {
+      get_instr_len();
+      // write file to intermediate text
+      fprintf(imdt, "%x\t%d\t%s\t%s\t%s\n", LOCCTR, instr_len, label, opcode, operand);
 
-    while(strcmp(opcode, "END") != 0){
-        fprintf(imdt, "%d %s %s %s\n", LOCCTR, label, opcode, operand);
+      if (strcmp(label, "-") != 0 && strcmp(label, "START") != 0) {
+        // if there is a symbol in label field then
+        //search symtab for label
+        search_in_symtab();
+      }
 
-        if (strcmp(label, "-") != 0){
-            fprintf(symtab, "%s\t%d\n", label, LOCCTR);
-        }
-
+        //search optab for opcode
         read_from_optab();
-
-        fscanf(program, "%s%s%s", label, opcode, operand);
     }
+    //read next input line
+    fscanf(program, "%s%s%s", label, opcode, operand);
+  }
+  //write last line to intermediate file
+  fprintf(imdt, "%x\t%d\t%s\t%s\t%s\n", LOCCTR, instr_len, label, opcode, operand);
+  //save {LOCCTR - starting address} as program length
+  fprintf(length, "%d", LOCCTR - start_address);
 
-    fprintf(imdt, "%d\t%s\t%s\t%s\n", LOCCTR, label, opcode, operand);
-
-    fprintf(length, "%d", LOCCTR - start_address);
-
-    fclose(program);
-    fclose(symtab);
-    fclose(imdt);
-    fclose(length);
-
+  fclose(program);
+  fclose(imdt);
+  fclose(length);
 }
