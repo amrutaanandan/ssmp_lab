@@ -38,3 +38,4 @@ jmp print1
 exit: mov ah, 4ch
 int 21h
 .exit
+end
