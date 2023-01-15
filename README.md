@@ -14,3 +14,13 @@
 <h2>Two Pass Assembler</h2>
 <p>Pass One</p>
 <p>Pass Two</p>
+
+<h2>Basic MASM Operations and Familiarization</h2>
+<p>Familiarization of MASM</p>
+<p>Perform the following arithmetic and bit manipulation operations using 8086 MASM
+<li>16 bit addition</li>
+<li>16 bit subtraction</li>
+<li>AND</li>
+<li>OR</li>
+<li>XOR</li>
+<li>NOT</li></p>
