@@ -3,7 +3,7 @@
 #include <string.h>
 
 FILE *obj, *optab, *symtab, *imdt, *length;
-int tot_len, i, flag = 0, nim;
+int tot_len, i, flag = 0, instr_len;
 
 char label[10] = {' '}, operand[10] = {' '}, opcode[10] = {' '}, optab_opcode[10] = {' '};
 char optab_mnemonic[10] = {' '}, symtab_opcode[10] = {' '}, symtab_operand[10] = {' '}, minstr[6]={' '};
