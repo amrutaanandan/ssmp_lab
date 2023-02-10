@@ -77,10 +77,11 @@ int main(){
     length = fopen("length.txt", "r");
 
     fscanf(imdt, "%s%s%s%s%x", operand, optab_opcode, label, opcode, &LOCCTR);
+    start_address = LOCCTR;
     fscanf(length, "%x", &tot_len);
 
     if(strcmp(opcode, "START") == 0){
-        fprintf(obj, "H^%s^00%x^0000%x\n",label, LOCCTR, tot_len);
+        fprintf(obj, "H^%s^00%x^0000%x\n",label, LOCCTR, tot_len+LOCCTR);
     }
     fprintf(obj,"T^%x", tot_len-3);
 
@@ -90,7 +91,11 @@ int main(){
         fscanf(imdt, "%x%x%s%s%s", &LOCCTR, &instr_len, label, opcode, operand);
     }
     fprintf(obj, "\n");
-    fprintf(obj, "E^00%x", tot_len);
+    fprintf(obj, "E^00%x", LOCCTR);
     fclose(optab);
+    fclose(symtab);
+    fclose(imdt);
+    fclose(length);
+    fclose(obj);
     return 0;
 }
