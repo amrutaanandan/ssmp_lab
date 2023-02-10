@@ -12,8 +12,8 @@
 <p>To implement different paging techniques of memory management - Allocation of frames to processes and calculation of internal fragmentation</p>
 
 <h2>Two Pass Assembler</h2>
-<p>Pass One</p>
-<p>Pass Two</p>
+<p>Pass One: implement pass 1 of a 2 pass assembler</p>
+<p>Pass Two: implement pass 2 of a 2 pass assembler</p>
 
 <h2>Basic MASM Operations and Familiarization</h2>
 <p>Familiarization of MASM</p>
