@@ -24,3 +24,7 @@
 <li>OR</li>
 <li>XOR</li>
 <li>NOT</li></p>
+
+<h2>Loaders</h2>
+<p>Absolute Loader</p>
+<p>Relocating Loader</p>
