@@ -29,11 +29,11 @@
 <p>To implement different paging techniques of memory management - Allocation of frames to processes and calculation of internal fragmentation</p>
 
 <h2>Two Pass Assembler</h2>
-<p>Pass One - implement pass 1 of a 2 pass assembler</p>
-<p>Pass Two - implement pass 2 of a 2 pass assembler</p>
+<p><li>Pass One - implement pass 1 of a 2 pass assembler</li>
+<li>Pass Two - implement pass 2 of a 2 pass assembler</li></p>
 
 <h2>Loaders</h2>
-<p>Absolute Loader</p>
-<p>Relocating Loader</p>
+<p><li>Absolute Loader</li>
+<li>Relocating Loader</li></p>
 
 
