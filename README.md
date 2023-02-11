@@ -1,4 +1,21 @@
 # ssmp_lab
+
+<h2>MASM Programs</h2>
+<p>
+<li>Arithmetic Operations</li>
+<li>Logical Operations</li>
+<li>String Operations</li>
+<li>Sorting Operation and Fibonacci Series</li></p>
+
+<h2>8051 Keil Programs</h2>
+<p>Write 8051 programs to implement the following arithmetic operations in Keil</p>
+<p>
+<li>Addition (using immediate addressing)</li>
+<li>Subtraction (using direct addressing)</li>
+<li>Multiplication (using register indirect addressing)</li>
+<li>Division (using external memory access)</li>
+</p>
+
 <h2>File Allocation and Organization</h2>
 <p>File Organization Strategies - To simulate the following file organization techniques:
 <li>single level directory</li>
@@ -15,22 +32,8 @@
 <p>Pass One - implement pass 1 of a 2 pass assembler</p>
 <p>Pass Two - implement pass 2 of a 2 pass assembler</p>
 
-<h2>MASM Programs</h2>
-<p>
-<li>Arithmetic Operations</li>
-<li>Logical Operations</li>
-<li>String Operations</li>
-<li>Sorting Operation and Fibonacci Series</li></p>
-
 <h2>Loaders</h2>
 <p>Absolute Loader</p>
 <p>Relocating Loader</p>
 
-<h2>8051 Keil Programs</h2>
-<p>Write 8051 programs to implement the following arithmetic operations in Keil</p>
-<p>
-<li>Addition (using immediate addressing)</li>
-<li>Subtraction (using direct addressing)</li>
-<li>Multiplication (using register indirect addressing)</li>
-<li>Division (using external memory access)</li>
-</p>
+
