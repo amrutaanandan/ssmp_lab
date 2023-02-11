@@ -15,15 +15,12 @@
 <p>Pass One - implement pass 1 of a 2 pass assembler</p>
 <p>Pass Two - implement pass 2 of a 2 pass assembler</p>
 
-<h2>Basic MASM Operations and Familiarization</h2>
-<p>Familiarization of MASM</p>
-<p>Perform the following arithmetic and bit manipulation operations using 8086 MASM
-<li>16 bit addition</li>
-<li>16 bit subtraction</li>
-<li>AND</li>
-<li>OR</li>
-<li>XOR</li>
-<li>NOT</li></p>
+<h2>MASM Programs</h2>
+<p>
+<li>Arithmetic Operations</li>
+<li>Logical Operations</li>
+<li>String Operations</li>
+<li>Sorting Operation and Fibonacci Series</li></p>
 
 <h2>Loaders</h2>
 <p>Absolute Loader</p>
