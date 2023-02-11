@@ -1,6 +1,6 @@
 # ssmp_lab
 
-<h2>MASM Programs</h2>
+<h2><a href="https://github.com/amrutaanandan/ssmp_lab/tree/main/MASM%20programs" target="_blank">MASM Programs</a></h2>
 <p>
 <li>Arithmetic Operations</li>
 <li>Logical Operations</li>
