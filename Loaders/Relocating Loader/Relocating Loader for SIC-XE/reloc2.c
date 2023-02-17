@@ -92,7 +92,7 @@ int main(){
                         }
                         ind+=6;
 
-                        if(record[ind] == '^' || record[ind] == '\0'){ //if the objet is not a byte constant i.e. object code length > 6
+                        if(record[ind] == '^' || record[ind] == '\0'){ //if the objet is not a byte constant i.e. object code length = 6
                             ind++;
                             objcode[j] = '\0';
                         }
