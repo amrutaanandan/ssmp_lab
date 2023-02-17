@@ -2,14 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-FILE *program, *optab, *symtab, *imdt, *length, *create_symtab;
-int error=0, instr_len = 3, curr;
+FILE *program, *optab, *symtab, *imdt, *length, *create_symtab, *littab;
+int error=0, instr_len = 3, curr, i=0, j=0, k=0;
 
-char label[10] = {' '}, operand[10] = {' '}, opcode[10] = {' '},
-     optab_opcode[10] = {' '};
-char optab_mnemonic[10] = {' '}, symtab_opcode[10] = {' '},
-     symtab_operand[10] = {' '};
-int LOCCTR, start_address, symbol_dupl;
+char label[10] = {' '}, operand[10] = {' '}, opcode[10] = {' '}, optab_opcode[10] = {' '}, hexlit[2];
+char optab_mnemonic[10] = {' '}, symtab_opcode[10] = {' '}, symtab_operand[10] = {' '};
+
+int LOCCTR, start_address, symbol_dupl, hex;
 
 /*--------------------READING FROM OPTAB AND GETTING LOCCTR--------------------*/
 
@@ -25,6 +24,41 @@ void read_from_optab() {
       break;
     }
     fscanf(optab, "%s %s", optab_opcode, optab_mnemonic);
+  }
+  
+  if(strcmp(opcode, "LTORG") == 0){
+     LOCCTR += 0;
+  }
+  //if the operand is a literal, enter it into littab
+  if(operand[0] == '='){
+    
+    for(i=1; i<strlen(operand); i++)  //entering literal name
+      fprintf(littab, "%c", operand[i]);
+      
+    fprintf(littab, "\t");
+    
+    
+    for(i=3; i<strlen(operand)-1; i++){ //entering literal value
+      if(operand[1] == 'C')
+        fprintf(littab, "%x", operand[i]);
+      else
+        fprintf(littab, "%c", operand[i]);
+    }
+    
+    if(operand[1] == 'C'){  //literal length
+      fprintf(littab, "\t%x\t%x", (int)(strlen(operand)-4),LOCCTR);
+    }
+    else{
+      for(i=3, j=0; i<strlen(operand), j<2; j++, i++){
+        hexlit[j] = operand[i];
+      }
+      sscanf(hexlit, "%x", &hex);
+      hexlit[0] = '\0';
+      sprintf(hexlit,"%x", hex);
+      fprintf(littab, "\t%x\t%x", (int)strlen(hexlit), LOCCTR);
+    }
+    
+    fprintf(littab, "\n");
   }
   
   //else if opcode = 'RESW' then
@@ -77,6 +111,7 @@ void search_in_symtab() {
   }
   //else insert {label, locctr} into symtab
   if (symbol_dupl == 0) {
+    
     fprintf(symtab, "%s\t%x\n", label, LOCCTR);
 
   }
@@ -131,6 +166,7 @@ void main() {
   imdt = fopen("intermediate.txt", "w");
   length = fopen("length.txt", "w");
   create_symtab = fopen("symtab.txt", "w");
+  littab = fopen("littab.txt", "w");
   fclose(create_symtab);
 
   // read first input line
@@ -157,7 +193,10 @@ void main() {
     if (label[0] != ';') {
       get_instr_len();
       // write file to intermediate text
-      fprintf(imdt, "%x\t%d\t%s\t%s\t%s\n", LOCCTR, instr_len, label, opcode, operand);
+      if(strcmp(opcode, "LTORG") != 0)
+        fprintf(imdt, "%x\t%d\t%s\t%s\t%s\n", LOCCTR, instr_len, label, opcode, operand);
+      else
+        fprintf(imdt,"  -  \t-  \t-  \tLTORG\t  -\n");
 
       if (strcmp(label, "-") != 0 && strcmp(label, "START") != 0) {
         // if there is a symbol in label field then
@@ -174,7 +213,7 @@ void main() {
   //write last line to intermediate file
   fprintf(imdt, "%x\t%d\t%s\t%s\t%s\n", LOCCTR, instr_len, label, opcode, operand);
   //save {LOCCTR - starting address} as program length
-  fprintf(length, "%d", LOCCTR - start_address);
+  fprintf(length, "%x", LOCCTR - start_address);
 
   fclose(program);
   fclose(imdt);
@@ -206,4 +245,3 @@ BETA	     401a
 Length.txt:
 
 29*/
-
