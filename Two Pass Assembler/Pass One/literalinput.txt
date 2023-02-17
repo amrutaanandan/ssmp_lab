@@ -1,0 +1,16 @@
+SUM     START   2000
+FIRST   LDX     ZERO
+-       LTORG   -
+-       LDA     =C'EOF'
+-       START   BUFFER
+LOOP    ADD     TABLE,X
+-       TIX     COUNT
+-       JLT     LOOP
+-       STA     TOTAL
+-       RSUB    -
+TABLE   RESW    2000
+COUNT   RESW    1
+ZERO    WORD    0
+TOTAL   RESW    1
+BUFFER  RESB    50
+-       END     -
