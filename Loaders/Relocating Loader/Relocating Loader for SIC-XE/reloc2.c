@@ -98,6 +98,9 @@ int main(){
                         }
                         else{
                             while(record[ind] != '^'){ //if the object code is a byte constant
+                                if(record[ind] == '\0'){ //if it is the last instruction
+                                    break;
+                                }
                                 objcode[j] = record[ind];
                                 ind++;
                                 j++;
