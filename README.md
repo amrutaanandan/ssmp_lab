@@ -34,6 +34,10 @@
 
 <h2><a href="https://github.com/amrutaanandan/ssmp_lab/tree/main/Loaders">Loaders</a></h2>
 <p><li>Absolute Loader</li>
-<li>Relocating Loader</li></p>
+<li>Relocating Loader
+  <ul><li>Relocating Loader for SIC</li>
+      <li>Relocating Loader for SIC-XE</li>
+  </ul>
+</li></p>
 
 
