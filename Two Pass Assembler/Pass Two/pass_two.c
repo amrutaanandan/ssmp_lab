@@ -17,7 +17,7 @@ void convert_to_hex(){
 }
 
 void get_symbol(){
-    symtab = fopen("Symtab.txt", "r");
+    symtab = fopen("symtab.txt", "r");
     fscanf(symtab, "%s%s", symtab_operand, symtab_opcode);
     while(!feof(symtab)){
         if(strcmp(symtab_operand, operand) == 0){
