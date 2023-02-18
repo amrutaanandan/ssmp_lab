@@ -41,7 +41,6 @@ void get_opcode() {
 
     if (strcmp(optab_mnemonic, opcode) == 0) {
       strcpy(minstr, optab_opcode);
-
       if (strcmp(operand, "-") != 0) {
         get_symbol();
         fprintf(obj, "^%s", minstr);
@@ -50,18 +49,27 @@ void get_opcode() {
         fprintf(obj, "^%s", minstr);
       }
       break;
-    } else if (strcmp(opcode, "BYTE") == 0 || strcmp(opcode, "WORD") == 0) {
+    }
+    else if (opcode[0] == '+') {
+      strcpy(minstr, "0C");
+      get_symbol();
+      fprintf(obj, "^%s", minstr);
+      break;
+    }
+    else if (strcmp(opcode, "BYTE") == 0 || strcmp(opcode, "WORD") == 0) {
       if (strcmp(opcode, "WORD") == 0) {
         strcpy(minstr, "00000");
         strcat(minstr, operand);
         fprintf(obj, "^%s", minstr);
         break;
-      } else {
+      }
+      else {
         convert_to_hex();
         break;
       }
       flag = 1;
-    } else if (strcmp(opcode, "RESW") == 0 || strcmp(opcode, "RESB") == 0) {
+    }
+    else if (strcmp(opcode, "RESW") == 0 || strcmp(opcode, "RESB") == 0) {
       break;
     }
 
